@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Vision | Object Detection</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <span>◈</span> AI VISION
+            </div>
+
+            <nav>
+                <a href="#" class="active">▦ Dashboard</a>
+                <a href="#camera">◉ Live Detection</a>
+                <a href="#statistics">▤ Analytics</a>
+                <a href="#features">⚙ Features</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <p>POWERED BY</p>
+                <h3>YOLOv8 + ByteTrack</h3>
+                <span>Computer Vision System</span>
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>AI Vision Dashboard</h1>
+                    <p>Real-time Object Detection & Tracking</p>
+                </div>
+
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    SYSTEM READY
+                </div>
+            </header>
+
+
+            <!-- Statistics -->
+            <section class="stats-grid" id="statistics">
+
+                <div class="stat-card">
+                    <span>PROCESSING FPS</span>
+                    <h2 id="fps">0</h2>
+                    <p>Frames per second</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>DETECTED OBJECTS</span>
+                    <h2 id="totalObjects">0</h2>
+                    <p>Currently visible</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>OBJECT TYPES</span>
+                    <h2 id="objectTypes">0</h2>
+                    <p>Different categories</p>
+                </div>
+
+                <div class="stat-card">
+                    <span>TRACKING STATUS</span>
+                    <h2 id="trackingStatus">OFF</h2>
+                    <p>ByteTrack engine</p>
+                </div>
+
+            </section>
+
+
+            <!-- Camera and Object Panel -->
+            <section class="content-grid" id="camera">
+
+                <div class="camera-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Live Camera Feed</h2>
+                            <p>AI-powered real-time vision</p>
+                        </div>
+
+                        <span class="live-badge">● LIVE</span>
+                    </div>
+
+                    <div class="camera-screen">
+                        <img id="cameraFeed"
+                             alt="Live Camera Feed">
+
+                        <div id="cameraPlaceholder">
+                            <div class="camera-icon">◉</div>
+                            <h3>Camera Preview</h3>
+                            <p>Start detection to begin</p>
+                        </div>
+                    </div>
+
+                    <div class="camera-controls">
+
+                        <button id="startBtn" class="btn primary">
+                            ▶ Start Detection
+                        </button>
+
+                        <button id="stopBtn" class="btn danger">
+                            ■ Stop Detection
+                        </button>
+
+                        <button id="screenshotBtn" class="btn secondary">
+                            ▣ Screenshot
+                        </button>
+
+                        <button id="recordBtn" class="btn secondary">
+                            ● Record
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Object Panel -->
+                <div class="objects-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Detected Objects</h2>
+                            <p>Live object statistics</p>
+                        </div>
+                    </div>
+
+                    <div id="objectList">
+                        <p class="empty-message">
+                            No objects detected yet.
+                        </p>
+                    </div>
+
+                    <div class="model-info">
+                        <p>Detection Model</p>
+                        <h3>YOLOv8 Nano</h3>
+
+                        <p>Tracking Algorithm</p>
+                        <h3>ByteTrack</h3>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Analytics Dashboard -->
+<section class="analytics-section" id="analytics">
+
+    <div class="panel-heading">
+        <div>
+            <h2>Detection Analytics</h2>
+            <p>Real-time object detection history</p>
+            <button class="export-btn" onclick="window.location.href='/api/export'">
+             ⬇ Download CSV Report
+            </button>
+        </div>
+    </div>
+
+    <div class="analytics-grid">
+
+        <div class="analytics-card">
+            <span>Total Records</span>
+            <h2 id="totalRecords">0</h2>
+        </div>
+
+        <div class="analytics-card">
+            <span>Latest Detection</span>
+            <h2 id="latestDetection">0</h2>
+        </div>
+
+        <div class="analytics-card">
+            <span>History Status</span>
+            <h2 id="historyStatus">Waiting</h2>
+        </div>
+
+
+    </div>
+
+
+<!-- Object Detection Summary -->
+<div class="summary-grid">
+
+    <div class="summary-card">
+        <span>Total Objects Detected</span>
+        <h2 id="summaryTotalObjects">0</h2>
+    </div>
+
+    <div class="summary-card">
+        <span>Most Detected Object</span>
+        <h2 id="summaryMostDetected">None</h2>
+    </div>
+
+    <div class="summary-card">
+        <span>Unique Object Types</span>
+        <h2 id="summaryUniqueTypes">0</h2>
+    </div>
+
+    <div class="summary-card">
+        <span>Total Detection Sessions</span>
+        <h2 id="summarySessions">0</h2>
+    </div>
+
+</div>
+
+<!-- Object Tracking History -->
+<section class="tracking-section">
+
+    <div class="history-panel">
+
+        <div class="panel-heading">
+            <div>
+                <h3>Object Tracking ID History</h3>
+                <p>Live tracked objects and their timestamps</p>
+            </div>
+
+            <span class="live-indicator">● LIVE</span>
+        </div>
+
+        <div class="tracking-stats">
+            Total Tracked Objects:
+            <strong id="totalTracked">0</strong>
+        </div>
+
+        <div class="table-container">
+            <table class="tracking-table">
+
+                <thead>
+                    <tr>
+                        <th>Tracking ID</th>
+                        <th>Object Name</th>
+                        <th>First Seen</th>
+                        <th>Last Seen</th>
+                    </tr>
+                </thead>
+
+                <tbody id="trackingTableBody">
+                    <tr>
+                        <td colspan="4">No tracked objects available.</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</section>
+    
+    <!-- Live Detection Graph -->
+<div class="history-panel graph-panel">
+
+    <div class="panel-heading">
+        <div>
+            <h3>Live Detection Graph</h3>
+            <p>Objects detected over time</p>
+        </div>
+        <span class="live-indicator">● LIVE</span>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="detectionChart"></canvas>
+    </div>
+
+</div>
+
+    <div class="history-panel">
+        <h3>Detection History</h3>
+
+        <div id="historyList">
+            <p class="empty-message">
+                No detection history available.
+            </p>
+        </div>
+    </div>
+
+</section>
+
+
+            <!-- Features -->
+            <section class="features-section" id="features">
+
+                <h2>System Features</h2>
+
+                <div class="features-grid">
+
+                    <div class="feature-card">
+                        <span>◈</span>
+                        <h3>Object Detection</h3>
+                        <p>Identify objects using YOLOv8.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span>◎</span>
+                        <h3>Object Tracking</h3>
+                        <p>Track moving objects with IDs.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span>▣</span>
+                        <h3>Screenshot</h3>
+                        <p>Save detected frames.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span>●</span>
+                        <h3>Video Recording</h3>
+                        <p>Record AI detection videos.</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <footer>
+                AI Vision Dashboard | Built with Python, Flask & OpenCV
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
