@@ -92,6 +92,17 @@ Object_Detection_Tracking/
 - Cloud deployment
 - Advanced analytics and reports
 
+## Project Screenshots
+
+### 1. Dashboard
+![Dashboard](screenshots/dashboard%20%282%29.png)
+
+### 2. Object Detection
+![Object Detection](screenshots/object-detection.png)
+
+### 3. Analytics Dashboard
+![Analytics](screenshots/analytics.png)
+
 ## Author
 
 Developed as an AI/ML project.
