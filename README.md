@@ -92,6 +92,14 @@ Object_Detection_Tracking/
 - Cloud deployment
 - Advanced analytics and reports
 
+## Project Demo Video
+
+Watch the complete project demonstration:
+
+[![AI Object Detection Demo](https://img.youtube.com/vi/PGg6mFISrAQ/0.jpg)](https://youtu.be/PGg6mFISrAQ)
+
+[Click here to watch the demo](https://youtu.be/PGg6mFISrAQ)
+
 ## Project Screenshots
 
 ### 1. Dashboard
